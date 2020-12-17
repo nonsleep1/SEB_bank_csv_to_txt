@@ -94,7 +94,7 @@ int main(int argc, char* argv[]) {
 	if (argc > 0)
 	{
 		try {
-			std::ifstream mycsv("testas2.csv");
+			std::ifstream mycsv("testas3.csv");
 			//std::ifstream mycsv(argv[1]);
 			std::ofstream remade(ReturnFileNameWithDate(1));
 			std::vector<std::string>parsedline;
@@ -110,7 +110,7 @@ int main(int argc, char* argv[]) {
 				{
 					
 					lineNum++;
-					std::cout << lineNum << "\n";
+					//std::cout << lineNum << "\n";
 					//if (lineNum < 2)
 					//{
 					//	//continue;
@@ -124,13 +124,14 @@ int main(int argc, char* argv[]) {
 						}
 						
 						if (parsedline.size() > 14) {
-							found = parsedline[9].find("#");
-							if (TRUE)
+							//found = parsedline[9].find("##");
+							//std::cout << "Number of found: " << found << "\n";
+							if((parsedline[9].find('#')) < parsedline[9].length())
 							{
 								std::cout << parsedline[1] << " " << parsedline[3] << " " << parsedline[9] << "\n";
 								remade << parsedline[1] << "\t" << parsedline[3] << "\t" << parsedline[9] << "\n";
 
-
+								//std::cout << "kazkaz:  " <<parsedline[1] << "\n";
 								parsedline.clear();
 
 								/*found = parsedline[9].find("#");
@@ -140,6 +141,7 @@ int main(int argc, char* argv[]) {
 									replace(parsedline[15], "LT-\r", "LT-");
 								}*/
 							}
+							//found = 0;
 							/*	parsedline[4] = trim(parsedline[4], '.');
 								parsedline[6] = trim(parsedline[6], '.');
 								parsedline[8] = trim(parsedline[8], '.');
@@ -151,6 +153,7 @@ int main(int argc, char* argv[]) {
 						
 					
 				}
+				std::cout <<"npos =  "<<std::string::npos << "\n";
 			}
 			else
 			{
