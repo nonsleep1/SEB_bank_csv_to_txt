@@ -59,7 +59,7 @@ std::string ReturnFileNameWithDate(int option)
 
 		char mbstr[100];
 
-		if (std::strftime(mbstr, sizeof(mbstr), "%Y%m%u", &newtime)) {
+		if (std::strftime(mbstr, sizeof(mbstr), "%Y%m%d", &newtime)) {
 			//std::cout << " MBSTR: " << mbstr << '\n';
 			newtimeminusonemonth = newtime;
 		}
@@ -71,11 +71,11 @@ std::string ReturnFileNameWithDate(int option)
 			break;
 
 		case 1:
-			newtimeminusonemonth.tm_mon = newtimeminusonemonth.tm_mon - 1;
+			//newtimeminusonemonth.tm_mon = newtimeminusonemonth.tm_mon - 1;
 			date = "seb" + std::string(mbstr) + ".txt";
-
+			std::cout << date << "\n";
 			return date;
-		
+			
 		}
 
 		//std::cout << "TV_" << mbstr << ".txt" << std::endl;
@@ -110,11 +110,7 @@ int main(int argc, char* argv[]) {
 				{
 					
 					lineNum++;
-					//std::cout << lineNum << "\n";
-					//if (lineNum < 2)
-					//{
-					//	//continue;
-					//}
+					
 					if(lineNum > 2)
 					{
 						std::stringstream wstr(line);
@@ -124,15 +120,15 @@ int main(int argc, char* argv[]) {
 						}
 						
 						if (parsedline.size() > 14) {
-							//found = parsedline[9].find("##");
-							//std::cout << "Number of found: " << found << "\n";
-							if((parsedline[9].find('#')) < parsedline[9].length())
+							
+							if((parsedline[9].find('#')) != std::string::npos)
 							{
+								while(replace(parsedline[9], "#", "\t"));
 								std::cout << parsedline[1] << " " << parsedline[3] << " " << parsedline[9] << "\n";
 								remade << parsedline[1] << "\t" << parsedline[3] << "\t" << parsedline[9] << "\n";
 
 								//std::cout << "kazkaz:  " <<parsedline[1] << "\n";
-								parsedline.clear();
+								
 
 								/*found = parsedline[9].find("#");
 								if (found != std::string::npos) {
@@ -149,11 +145,12 @@ int main(int argc, char* argv[]) {
 							
 							
 						}
+						parsedline.clear();
 					}
 						
 					
 				}
-				std::cout <<"npos =  "<<std::string::npos << "\n";
+				
 			}
 			else
 			{
