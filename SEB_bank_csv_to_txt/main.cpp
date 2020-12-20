@@ -5,11 +5,13 @@
 #include <string>
 
 #include <fcntl.h>
-#include <io.h>
+//#include <io.h>
 #include <sstream>
 #include <ctime>
 
 #include <locale>
+
+
 
 
 bool replace(std::string& str, const std::string& from, const std::string& to)
@@ -31,7 +33,7 @@ std::string trim(const std::string& line, const char& fromthistodelete)
 	}
 	else
 	{
-		//std::cout << "Klaida!";
+		
 	}
 	return newline;
 }
@@ -43,7 +45,7 @@ std::string ReturnFileNameWithDate(int option)
 		std::string date = "";
 		time_t now = time(0);
 		struct tm newtime;
-		struct tm newtimeminusonemonth;
+		//struct tm newtimeminusonemonth;
 
 
 		localtime_s(&newtime, &now);
@@ -60,8 +62,7 @@ std::string ReturnFileNameWithDate(int option)
 		char mbstr[100];
 
 		if (std::strftime(mbstr, sizeof(mbstr), "%Y%m%d", &newtime)) {
-			//std::cout << " MBSTR: " << mbstr << '\n';
-			newtimeminusonemonth = newtime;
+			std::cout << "Got date!\n";
 		}
 		switch (option)
 		{
@@ -71,14 +72,11 @@ std::string ReturnFileNameWithDate(int option)
 			break;
 
 		case 1:
-			//newtimeminusonemonth.tm_mon = newtimeminusonemonth.tm_mon - 1;
 			date = "seb" + std::string(mbstr) + ".txt";
 			std::cout << date << "\n";
 			return date;
 			
 		}
-
-		//std::cout << "TV_" << mbstr << ".txt" << std::endl;
 
 
 	}
@@ -94,8 +92,9 @@ int main(int argc, char* argv[]) {
 	if (argc > 0)
 	{
 		try {
-			std::ifstream mycsv("testas3.csv");
+			std::ifstream mycsv("testas3.csv"); //for test propurses
 			//std::ifstream mycsv(argv[1]);
+
 			std::ofstream remade(ReturnFileNameWithDate(1));
 			std::vector<std::string>parsedline;
 			std::string line = "";
@@ -105,7 +104,13 @@ int main(int argc, char* argv[]) {
 			int lineNum = 0;
 			if (mycsv.is_open())
 			{
-				std::cout << "File opened!\n";
+				std::cout << "File opened! "<<"\n";
+				if (remade.is_open()) {
+					std::cout << "File Created!\n";
+				}
+				else {
+					std::cout << "Can't create file!\n";
+				}
 				while (std::getline(mycsv, line))
 				{
 					
@@ -123,25 +128,14 @@ int main(int argc, char* argv[]) {
 							
 							if((parsedline[9].find('#')) != std::string::npos)
 							{
+								parsedline[9] = trim(parsedline[9],'//');
 								while(replace(parsedline[9], "#", "\t"));
+
 								std::cout << parsedline[1] << " " << parsedline[3] << " " << parsedline[9] << "\n";
 								remade << parsedline[1] << "\t" << parsedline[3] << "\t" << parsedline[9] << "\n";
 
-								//std::cout << "kazkaz:  " <<parsedline[1] << "\n";
-								
-
-								/*found = parsedline[9].find("#");
-								if (found != std::string::npos) {
-									std::cout << "first 'needle' found at: " << found << '\n';
-									countas++;
-									replace(parsedline[15], "LT-\r", "LT-");
-								}*/
 							}
-							//found = 0;
-							/*	parsedline[4] = trim(parsedline[4], '.');
-								parsedline[6] = trim(parsedline[6], '.');
-								parsedline[8] = trim(parsedline[8], '.');
-								parsedline[10] = trim(parsedline[10], '.');*/
+							
 							
 							
 						}
@@ -151,11 +145,16 @@ int main(int argc, char* argv[]) {
 					
 				}
 				
+
 			}
+			
+
 			else
 			{
 				std::cout << "FILE DIDN'T FOUND!";
 			}
+			remade.close();
+			mycsv.close();
 		}
 		catch (const std::exception& e)
 		{
