@@ -45,20 +45,7 @@ std::string ReturnFileNameWithDate(int option)
 		std::string date = "";
 		time_t now = time(0);
 		struct tm newtime;
-		//struct tm newtimeminusonemonth;
-
-
 		localtime_s(&newtime, &now);
-
-		/*std::cout << "Year:" << 1900 + newtime.tm_year << std::endl;
-		std::cout << "Month: " << 1 + newtime.tm_mon << std::endl;
-		std::cout << "Day: " << newtime.tm_mday << std::endl;
-		std::cout << "Time: " << 1 + newtime.tm_hour << ":";
-		std::cout << 1 + newtime.tm_min << ":";
-		std::cout << 1 + newtime.tm_sec << std::endl;
-
-		std::cout << "seb_" << 1900 + newtime.tm_year << newtime.tm_mon << ".txt" << std::endl;*/
-
 		char mbstr[100];
 
 		if (std::strftime(mbstr, sizeof(mbstr), "%Y%m%d", &newtime)) {
@@ -88,13 +75,12 @@ std::string ReturnFileNameWithDate(int option)
 
 int main(int argc, char* argv[]) {
 	std::cout << "Parameters: " << argc << "\n";
-	//std::cout << argv[1] << "\n";
+	std::cout << argv[1] << "\n";
 	if (argc > 0)
 	{
 		try {
-			std::ifstream mycsv("testas3.csv"); //for test propurses
-			//std::ifstream mycsv(argv[1]);
-
+			//std::ifstream mycsv("testas3.csv"); //for test propurses
+			std::ifstream mycsv(argv[1]);
 			std::ofstream remade(ReturnFileNameWithDate(1));
 			std::vector<std::string>parsedline;
 			std::string line = "";
