@@ -115,6 +115,7 @@ int main(int argc, char* argv[]) {
 							if((parsedline[9].find('#')) != std::string::npos)
 							{
 								parsedline[9] = trim(parsedline[9],'//');
+								replace(parsedline[9], "\"", "");
 								while(replace(parsedline[9], "#", "\t"));
 
 								std::cout << parsedline[1] << " " << parsedline[3] << " " << parsedline[9] << "\n";
