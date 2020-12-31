@@ -38,6 +38,21 @@ std::string trim(const std::string& line, const char& fromthistodelete)
 	return newline;
 }
 
+std::string trim(const std::string& line, const std::string& fromthistodelete)
+{
+	std::string newline = "";
+	std::size_t pos = line.find(fromthistodelete);
+	if (pos != -1)
+	{
+		newline = line.substr(0, pos);
+	}
+	else
+	{
+
+	}
+	return newline;
+}
+
 std::string ReturnFileNameWithDate(int option)
 {
 	try
@@ -114,7 +129,7 @@ int main(int argc, char* argv[]) {
 							
 							if((parsedline[9].find('#')) != std::string::npos)
 							{
-								parsedline[9] = trim(parsedline[9],'//');
+								parsedline[9] = trim(parsedline[9],"//");
 								replace(parsedline[9], "\"", "");
 								while(replace(parsedline[9], "#", "\t"));
 
